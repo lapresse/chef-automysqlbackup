@@ -1,0 +1,6 @@
+.rake_test_cache
+*.swp
+cookbooks/
+dev-cookbooks/
+tmp
+certificates/encrypted_data_bag_secret*
