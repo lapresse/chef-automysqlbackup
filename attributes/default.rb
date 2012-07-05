@@ -15,6 +15,7 @@ default['automysqlbackup']['email'] = "root"
 default['automysqlbackup']['config_path'] = "/etc/automysqlbackup"
 default['automysqlbackup']['bin_path'] = "/usr/local/bin/automysqlbackup"
 default['automysqlbackup']['dump_path']  =  "/var/backup/db"
+default['automysqlbackup']['hostname']  =  "localhost"
 
 # when to run backup
 default['automysqlbackup']['time_hour'] = "0"

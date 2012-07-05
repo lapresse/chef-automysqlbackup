@@ -21,7 +21,7 @@ CONFIG_mysql_dump_username='root'
 CONFIG_mysql_dump_password='<%= node['mysql']['server_root_password'] %>'
 
 # Host name (or IP address) of MySQL server e.g localhost
-CONFIG_mysql_dump_host='localhost'
+CONFIG_mysql_dump_host='<%= node['automysqlbackup']['hostname'] %>'
 
 # "Friendly" host name of MySQL server to be used in email log
 # if unset or empty (default) will use CONFIG_mysql_dump_host instead

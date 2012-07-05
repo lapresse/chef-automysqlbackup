@@ -29,23 +29,23 @@ tmpname = "#{tmpdir}/automysqlbackup.tar.gz"
 directory tmpdir do
     mode "0700"
 end
-
-execute "wget tarball" do
-    command "wget $URL -o $TMPNAME"
-    cwd tmpdir
-    creates tmpname
-    timeout "60"
-    environment ({'URL' => node['automysqlbackup']['download_url'], 
-                 'TMPNAME' => tmpname
-    })
-    action :run
-end
-
-execute "untar" do
-    command "tar zxf automysqlbackup.tar.bz"
-    creates "#{tmpdir}/automysqlbackup"
-    cwd tmpdir
-end
+## FIXME broken
+#execute "wget tarball" do
+#    command "wget $URL -o $TMPNAME"
+#    cwd tmpdir
+#    creates tmpname
+#    timeout 60
+#    environment ({'URL' => node['automysqlbackup']['download_url'], 
+#                 'TMPNAME' => tmpname
+#    })
+#    action :run
+#end
+#
+#execute "untar" do
+#    command "tar zxf automysqlbackup.tar.bz"
+#    creates "#{tmpdir}/automysqlbackup"
+#    cwd tmpdir
+#end
 
 execute "copystuff" do
     creates node['automysqlbackup']['bin_path']
@@ -58,6 +58,15 @@ confpath = node['automysqlbackup']['config_path']
 directory confpath do
     action :create
 end
+
+directory node['automysqlbackup']['dump_path'] do
+    owner "root"
+    group "root"
+    mode "0700"
+    recursive true
+    action :create
+end
+
 
 # Save default config
 # copy from install stuff
