@@ -1,5 +1,4 @@
 
-
 # "latest" url is : http://sourceforge.net/projects/automysqlbackup/files/AutoMySQLBackup/AutoMySQLBackup%20VER%203.0/automysqlbackup-v3.0_rc6.tar.gz/download
 # We prefer picking a specific version so we know what we get
 # Can be redefined in your roles/env if you need to serve it internally for eg.
@@ -20,5 +19,9 @@ default['automysqlbackup']['hostname']  =  "localhost"
 # when to run backup
 default['automysqlbackup']['time_hour'] = "0"
 default['automysqlbackup']['time_minute'] = "1"
+
+# credentials
+default['automysqlbackup']['user'] = "root"
+#default['automysqlbackup']['password'] = node['mysql']['server_root_password']
 
 

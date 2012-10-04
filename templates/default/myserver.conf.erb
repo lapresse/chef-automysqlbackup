@@ -15,10 +15,10 @@
 # Basic Settings
 
 # Username to access the MySQL server e.g. dbuser
-CONFIG_mysql_dump_username='root'
+CONFIG_mysql_dump_username='<%= node['automysqlbackup']['user'] %>'
 
 # Password to access the MySQL server e.g. password
-CONFIG_mysql_dump_password='<%= node['mysql']['server_root_password'] %>'
+CONFIG_mysql_dump_password='<%= node['automysqlbackup']['password'] %>'
 
 # Host name (or IP address) of MySQL server e.g localhost
 CONFIG_mysql_dump_host='<%= node['automysqlbackup']['hostname'] %>'

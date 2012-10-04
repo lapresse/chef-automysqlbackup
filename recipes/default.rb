@@ -29,27 +29,25 @@ tmpname = "#{tmpdir}/automysqlbackup.tar.gz"
 directory tmpdir do
     mode "0700"
 end
-## FIXME broken
-#execute "wget tarball" do
-#    command "wget $URL -o $TMPNAME"
-#    cwd tmpdir
-#    creates tmpname
-#    timeout 60
-#    environment ({'URL' => node['automysqlbackup']['download_url'], 
-#                 'TMPNAME' => tmpname
-#    })
-#    action :run
-#end
-#
-#execute "untar" do
-#    command "tar zxf automysqlbackup.tar.bz"
-#    creates "#{tmpdir}/automysqlbackup"
-#    cwd tmpdir
-#end
+
+
+
+remote_file tmpname do
+  not_if { File.exists? tmpname }
+  source node['automysqlbackup']['download_url']
+#  notifies :run, resources(:execute => "untar-automysqlbackup")
+end
+
+execute "untar-automysqlbackup" do
+    command "tar zxf automysqlbackup.tar.gz"
+    creates "#{tmpdir}/automysqlbackup"
+    cwd tmpdir
+end
 
 execute "copystuff" do
-    creates node['automysqlbackup']['bin_path']
-    command "cp #{tmpdir}/automysqlbackup #{node['automysqlbackup']['bin_path']}"
+  action :nothing
+  creates node['automysqlbackup']['bin_path']
+  command "cp #{tmpdir}/automysqlbackup #{node['automysqlbackup']['bin_path']}"
 end
 
 # now, take care only about config:
@@ -93,3 +91,4 @@ cron "run_mysql_backup" do
   minute node['automysqlbackup']['time_minute']
   command "#{confpath}/run_mysql_backup"
 end
+
