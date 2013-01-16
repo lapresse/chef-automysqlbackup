@@ -1,8 +1,9 @@
 #
+# Author::  Achim Rosenhagen (<a.rosenhagen@ffuenf.de>)
 # Cookbook Name:: automysqlbackup
 # Recipe:: default
 #
-# Copyright 2012, La Presse
+# Copyright 2013, Achim Rosenhagen
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,79 +17,48 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-#
 
-# download, untargz
-
-# FIXME: missing : actual download/install of the thing. Need to look into NPM?
-# Assume the tar.gz is untarred in /root/automysqlbackup :\
-
-tmpdir = "/root/mysqlbackup"
-tmpname = "#{tmpdir}/automysqlbackup.tar.gz"
-
-directory tmpdir do
-    mode "0700"
+script "install automysqlbackup" do
+	interpreter "bash"
+	user "root"
+	cwd Chef::Config[:file_cache_path]
+	code <<-EOH
+	wget #{node['automysqlbackup']['download_url']}
+	mkdir automysqlbackup
+	cd automysqlbackup
+	tar -zxf ../automysqlbackup*.tar.gz
+	cp -pR automysqlbackup.conf #{node['automysqlbackup']['config_path']}/automysqlbackup.conf
+	cp -pR automysqlbackup #{node['automysqlbackup']['bin_path']}
+	EOH
 end
 
-
-
-remote_file tmpname do
-  not_if { File.exists? tmpname }
-  source node['automysqlbackup']['download_url']
-#  notifies :run, resources(:execute => "untar-automysqlbackup")
+directory node['automysqlbackup']['config_path'] do
+	action :create
 end
 
-execute "untar-automysqlbackup" do
-    command "tar zxf automysqlbackup.tar.gz"
-    creates "#{tmpdir}/automysqlbackup"
-    cwd tmpdir
+directory node['automysqlbackup']['backup_dir'] do
+	owner "root"
+	group "root"
+	mode "0700"
+	recursive true
+	action :create
 end
 
-execute "copystuff" do
-  action :nothing
-  creates node['automysqlbackup']['bin_path']
-  command "cp #{tmpdir}/automysqlbackup #{node['automysqlbackup']['bin_path']}"
+template "#{node['automysqlbackup']['config_path']}/#{node['automysqlbackup']['config']}.conf" do
+	source "myserver.conf.erb"
+	mode "0600"
+	variables({
+		:automysqlbackup => node['automysqlbackup']
+	})
 end
 
-# now, take care only about config:
-confpath = node['automysqlbackup']['config_path']
-
-directory confpath do
-    action :create
+template "#{node['automysqlbackup']['config_path']}/run_mysql_backup" do
+	source "run_mysql_backup.erb"
+	mode "0755"
 end
-
-directory node['automysqlbackup']['dump_path'] do
-    owner "root"
-    group "root"
-    mode "0700"
-    recursive true
-    action :create
-end
-
-
-# Save default config
-# copy from install stuff
-execute "copy default config" do
-    creates "#{confpath}/automysqlbackup.conf"
-    command "cp #{tmpdir}/automysqlbackup.conf  #{confpath}/automysqlbackup.conf"
-end
-#
-# Save OUR config
-template "#{confpath}/myserver.conf" do
-    source "myserver.conf.erb"
-    mode "0600"
-end
-
-
-template "#{confpath}/run_mysql_backup" do
-    source "run_mysql_backup.erb"
-    mode "0755"
-end
-
 
 cron "run_mysql_backup" do
-  hour   node['automysqlbackup']['time_hour']
-  minute node['automysqlbackup']['time_minute']
-  command "#{confpath}/run_mysql_backup"
+	hour node['automysqlbackup']['cron']['time_hour']
+	minute node['automysqlbackup']['cron']['time_minute']
+	command "#{node['automysqlbackup']['config_path']}/run_mysql_backup"
 end
-
