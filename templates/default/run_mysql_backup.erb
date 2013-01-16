@@ -6,10 +6,10 @@
 
 
 # run backup
-<%= node['automysqlbackup']['bin_path']  %> <%=  node['automysqlbackup']['config_path'] %>/myserver.conf
+node['automysqlbackup']['bin_path'] node['automysqlbackup']['config_path']/node['automysqlbackup']['config'].conf
 
 # set mode to backup
-chown -R root.root <%=  node['automysqlbackup']['dump_path']  %> 
-find <%=  node['automysqlbackup']['dump_path']  %> -type f -exec chmod 400 {} \;
-find <%=  node['automysqlbackup']['dump_path']  %> -type d -exec chmod 700 {} \;
+chown -R root.root node['automysqlbackup']['backup_dir']
+find node['automysqlbackup']['backup_dir'] -type f -exec chmod 400 {} \;
+find node['automysqlbackup']['backup_dir'] -type d -exec chmod 700 {} \;
 
