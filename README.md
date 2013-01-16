@@ -1,65 +1,100 @@
 Description
 ===========
 
-Install automysql backup and configure it to run automatically.
-
+Installs and configures [automysqlbackup](http://sourceforge.net/projects/automysqlbackup/)
 
 Requirements
 ============
 
-None
+Platform
+--------
+
+* Debian, Ubuntu
 
 Attributes
 ==========
+* `node['automysqlbackup']['download_url']` - 
+* `node['automysqlbackup']['config_path']` - 
+* `node['automysqlbackup']['config']` - 
+* `node['automysqlbackup']['bin_path']` - 
+* `node['automysqlbackup']['cron']['time_hour']` - 
 
+* `node['automysqlbackup']['mysql_dump_username']` - 
+* `node['automysqlbackup']['mysql_dump_password']` - use encrypted databag!
+* `node['automysqlbackup']['mysql_dump_host']` - 
+* `node['automysqlbackup']['mysql_dump_host_friendly']` - 
+* `node['automysqlbackup']['backup_dir']` - 
+* `node['automysqlbackup']['multicore']` - 
+* `node['automysqlbackup']['multicore_threads']` - 
+* `node['automysqlbackup']['db_names']` - 
+* `node['automysqlbackup']['db_month_names']` - 
+* `node['automysqlbackup']['db_exclude']` - 
+* `node['automysqlbackup']['table_exclude']` - 
+* `node['automysqlbackup']['do_monthly']` - 
+* `node['automysqlbackup']['do_weekly']` - 
+* `node['automysqlbackup']['rotation_daily']` - 
+* `node['automysqlbackup']['rotation_weekly']` - 
+* `node['automysqlbackup']['mysql_dump_port']` - 
+* `node['automysqlbackup']['mysql_dump_commcomp']` - 
+* `node['automysqlbackup']['mysql_dump_usessl']` - 
+* `node['automysqlbackup']['mysql_dump_socket']` - 
+* `node['automysqlbackup']['mysql_dump_max_allowed_packet']` - 
+* `node['automysqlbackup']['mysql_dump_single_transaction']` - 
+* `node['automysqlbackup']['mysql_dump_master_data']` - 
+* `node['automysqlbackup']['mysql_dump_full_schema']` - 
+* `node['automysqlbackup']['mysql_dump_dbstatus']` - 
+* `node['automysqlbackup']['mysql_dump_create_database']` - 
+* `node['automysqlbackup']['mysql_dump_use_separate_dirs']` - 
+* `node['automysqlbackup']['mysql_dump_compression']` - 
+* `node['automysqlbackup']['mysql_dump_latest']` - 
+* `node['automysqlbackup']['mysql_dump_latest_clean_filenames']` - 
+* `node['automysqlbackup']['mysql_dump_differential']` - 
+* `node['automysqlbackup']['mailcontent']` - 
+* `node['automysqlbackup']['mail_maxattsize']` - 
+* `node['automysqlbackup']['mail_splitandtar']` - 
+* `node['automysqlbackup']['mail_use_uuencoded_attachments']` - 
+* `node['automysqlbackup']['mail_address']` - 
+* `node['automysqlbackup']['encrypt']` - 
+* `node['automysqlbackup']['encrypt_password']` - use encrypted databag!
+* `node['automysqlbackup']['backup_local_files']` - 
+* `node['automysqlbackup']['prebackup']` - 
+* `node['automysqlbackup']['postbackup']` - 
+* `node['automysqlbackup']['dryrun']` - 
 
-What 
------
+Templates
+==========
 
-* default['automysqlbackup']['download_url'] The download URL. Use this to host your own and/or download the latest version.
+`myserver.conf`
+-----------------
 
+Creates a configuration file from the specified default attributes.
 
-Who
------
+`run_mysql_backup`
+-----------------
 
-* default['automysqlbackup']['email'] default is  "root".  Who to send reports too?
-
-When
-----
-
-* default['automysqlbackup']['time_hour'] default is  "0"
-* default['automysqlbackup']['time_minute'] default is  "1"
-
-How
------------
-
-* default['automysqlbackup']['user'] default is  "root" 
-* default['automysqlbackup']['password'] default is  nil
-
-
-What else?
-------------- 
-
-* default['automysqlbackup']['config_path'] default is  "/etc/automysqlbackup"
-* default['automysqlbackup']['bin_path'] default is  "/usr/local/bin/automysqlbackup"
-* default['automysqlbackup']['dump_path']  default is   "/var/backup/db"
-* default['automysqlbackup']['hostname']  default is   "localhost"
-
+Creates a script which is triggered by cron to automatically backup databases.
 
 Usage
 =====
 
-You must give a value at least for user and password. 
+Simply include the recipe. Make sure you do not store passwords in plain-text! Use encrypted databags instead.
 
-Backup are kept locally: you should pair this with a "real" backup method to take out the data. Backuping the DB like this only make
-sure that you will have a recoverable backup of your database (to the opposite of the raw database files that will have been read in
-an unknown state).
+License and Author
+==================
 
-Limitations
-===========
+Original:: Benoit Caron (<bcaron@lapresse.ca>)
+Author:: Achim Rosenhagen (<a.rosenhagen@ffuenf.de>)
 
-* Backups all databases: no support (yet) to pick specific DB for daily/monthly backups.
+Copyright:: 2013, La Presse (Benoit Caron), Achim Rosenhagen
 
-* Credentials are stored plain-text in the attributes. Should use an encrypted databag.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
+    http://www.apache.org/licenses/LICENSE-2.0
 
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.

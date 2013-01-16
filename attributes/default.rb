@@ -1,27 +1,50 @@
-
-# "latest" url is : http://sourceforge.net/projects/automysqlbackup/files/AutoMySQLBackup/AutoMySQLBackup%20VER%203.0/automysqlbackup-v3.0_rc6.tar.gz/download
-# We prefer picking a specific version so we know what we get
-# Can be redefined in your roles/env if you need to serve it internally for eg.
-#
-# FIXME: I'm overwritting this for 1st version to simplify development
-default['automysqlbackup']['download_url'] = "http://sourceforge.net/projects/automysqlbackup/files/AutoMySQLBackup/AutoMySQLBackup%20VER%203.0/automysqlbackup-v3.0_rc6.tar.gz/download"
-
-
-# Who to send reports too?
-default['automysqlbackup']['email'] = "root"
-
-
+default['automysqlbackup']['download_url'] = "http://downloads.sourceforge.net/project/automysqlbackup/AutoMySQLBackup/AutoMySQLBackup%20VER%203.0/automysqlbackup-v3.0_rc6.tar.gz"
 default['automysqlbackup']['config_path'] = "/etc/automysqlbackup"
+default['automysqlbackup']['config'] = "myserver"
 default['automysqlbackup']['bin_path'] = "/usr/local/bin/automysqlbackup"
-default['automysqlbackup']['dump_path']  =  "/var/backup/db"
-default['automysqlbackup']['hostname']  =  "localhost"
+default['automysqlbackup']['cron']['time_hour'] = "0"
+default['automysqlbackup']['cron']['time_minute'] = "1"
 
-# when to run backup
-default['automysqlbackup']['time_hour'] = "0"
-default['automysqlbackup']['time_minute'] = "1"
-
-# credentials
-default['automysqlbackup']['user'] = "root"
-#default['automysqlbackup']['password'] = node['mysql']['server_root_password']
-
-
+# --- #
+default['automysqlbackup']['mysql_dump_username'] = 'root'
+default['automysqlbackup']['mysql_dump_password'] = node['mysql']['server_root_password']
+default['automysqlbackup']['mysql_dump_host'] = 'localhost'
+default['automysqlbackup']['mysql_dump_host_friendly'] = ''
+default['automysqlbackup']['backup_dir'] = '/var/backup/db'
+default['automysqlbackup']['multicore'] = 'yes'
+default['automysqlbackup']['multicore_threads'] = 2
+default['automysqlbackup']['db_names'] = ''
+default['automysqlbackup']['db_month_names'] = ''
+default['automysqlbackup']['db_exclude'] = 'information_schema'
+default['automysqlbackup']['table_exclude'] = ''
+default['automysqlbackup']['do_monthly'] = '01'
+default['automysqlbackup']['do_weekly'] = '05'
+default['automysqlbackup']['rotation_daily'] = 6
+default['automysqlbackup']['rotation_weekly'] = 35
+default['automysqlbackup']['rotation_monthly'] = 150
+default['automysqlbackup']['mysql_dump_port'] = 3306
+default['automysqlbackup']['mysql_dump_commcomp'] = 'no'
+default['automysqlbackup']['mysql_dump_usessl'] = 'yes'
+default['automysqlbackup']['mysql_dump_socket'] = ''
+default['automysqlbackup']['mysql_dump_max_allowed_packet'] = ''
+default['automysqlbackup']['mysql_dump_single_transaction'] = 'no'
+default['automysqlbackup']['mysql_dump_master_data'] = ''
+default['automysqlbackup']['mysql_dump_full_schema'] = 'yes'
+default['automysqlbackup']['mysql_dump_dbstatus'] = 'yes'
+default['automysqlbackup']['mysql_dump_create_database'] = 'no'
+default['automysqlbackup']['mysql_dump_use_separate_dirs'] = 'yes'
+default['automysqlbackup']['mysql_dump_compression'] = 'gzip'
+default['automysqlbackup']['mysql_dump_latest'] = 'no'
+default['automysqlbackup']['mysql_dump_latest_clean_filenames'] = 'no'
+default['automysqlbackup']['mysql_dump_differential'] = 'no'
+default['automysqlbackup']['mailcontent'] = 'stdout'
+default['automysqlbackup']['mail_maxattsize'] = 4000
+default['automysqlbackup']['mail_splitandtar'] = 'yes'
+default['automysqlbackup']['mail_use_uuencoded_attachments'] = 'no'
+default['automysqlbackup']['mail_address'] = 'root'
+default['automysqlbackup']['encrypt'] = 'no'
+default['automysqlbackup']['encrypt_password'] = 'password0123'
+default['automysqlbackup']['backup_local_files'] = ''
+default['automysqlbackup']['prebackup'] = ''
+default['automysqlbackup']['postbackup'] = ''
+default['automysqlbackup']['dryrun'] = 0
