@@ -15,80 +15,43 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
-#
 
-# download, untargz
+# This refers to data bags created by the identities cookbook:
+# https://github.com/failshell/chef-identities
+root = Chef::EncryptedDataBagItem.load( 'users_vault', 'root' )
 
-# FIXME: missing : actual download/install of the thing. Need to look into NPM?
-# Assume the tar.gz is untarred in /root/automysqlbackup :\
-
-tmpdir = "/root/mysqlbackup"
-tmpname = "#{tmpdir}/automysqlbackup.tar.gz"
-
-directory tmpdir do
-    mode "0700"
+# package requirement
+package 'pigz' do
 end
 
+# Unpack and install software
+cookbook_file "/var/tmp/#{node[:automysqlbackup][:tarball]}" do
+end
 
-
-remote_file tmpname do
-  not_if { File.exists? tmpname }
-  source node['automysqlbackup']['download_url']
-#  notifies :run, resources(:execute => "untar-automysqlbackup")
+directory "/usr/share/automysqlbackup" do
 end
 
 execute "untar-automysqlbackup" do
-    command "tar zxf automysqlbackup.tar.gz"
-    creates "#{tmpdir}/automysqlbackup"
-    cwd tmpdir
+  cwd "/var/tmp"
+  command "tar zxf #{node[:automysqlbackup][:tarball]} -C /usr/share/automysqlbackup"
+  creates "/usr/share/automysqlbackup/automysqlbackup"
 end
 
-execute "copystuff" do
-  action :nothing
-  creates node['automysqlbackup']['bin_path']
-  command "cp #{tmpdir}/automysqlbackup #{node['automysqlbackup']['bin_path']}"
+# Symlink script and cfg file
+link '/usr/sbin/automysqlbackup' do
+  to '/usr/share/automysqlbackup/automysqlbackup'
 end
 
-# now, take care only about config:
-confpath = node['automysqlbackup']['config_path']
-
-directory confpath do
-    action :create
+directory '/etc/automysqlbackup' do
 end
 
-directory node['automysqlbackup']['dump_path'] do
-    owner "root"
-    group "root"
-    mode "0700"
-    recursive true
-    action :create
+template '/etc/automysqlbackup/automysqlbackup.conf' do
+  variables( :root_pass => root['password_cleartext'] )
+  mode 0400
 end
-
-
-# Save default config
-# copy from install stuff
-execute "copy default config" do
-    creates "#{confpath}/automysqlbackup.conf"
-    command "cp #{tmpdir}/automysqlbackup.conf  #{confpath}/automysqlbackup.conf"
-end
-#
-# Save OUR config
-template "#{confpath}/myserver.conf" do
-    source "myserver.conf.erb"
-    mode "0600"
-end
-
-
-template "#{confpath}/run_mysql_backup" do
-    source "run_mysql_backup.erb"
-    mode "0755"
-end
-
 
 cron "run_mysql_backup" do
-  hour   node['automysqlbackup']['time_hour']
-  minute node['automysqlbackup']['time_minute']
-  command "#{confpath}/run_mysql_backup"
+  hour   node['automysqlbackup']['cron_hour']
+  minute node['automysqlbackup']['cron_minute']
+  command "/usr/sbin/automysqlbackup"
 end
-
