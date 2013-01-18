@@ -7,7 +7,7 @@ default['automysqlbackup']['cron']['time_minute'] = "1"
 
 # --- #
 default['automysqlbackup']['mysql_dump_username'] = 'root'
-default['automysqlbackup']['mysql_dump_password'] = node['mysql']['server_root_password']
+default['automysqlbackup']['mysql_dump_password'] = ''
 default['automysqlbackup']['mysql_dump_host'] = 'localhost'
 default['automysqlbackup']['mysql_dump_host_friendly'] = ''
 default['automysqlbackup']['backup_dir'] = '/var/backup/db'
