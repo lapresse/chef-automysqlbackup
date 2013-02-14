@@ -6,8 +6,8 @@ default['automysqlbackup']['server']  =  "localhost"
 default['automysqlbackup']['tarball'] = "automysqlbackup-v3.0_rc6.tar.gz"
 
 # when to run backup
-default['automysqlbackup']['cron_hour'] = 0
-default['automysqlbackup']['cron_minute'] = 1
+default['automysqlbackup']['cron_hour'] = 1
+default['automysqlbackup']['cron_minute'] = 0
 
 # credentials
 default['automysqlbackup']['user'] = "root"
