@@ -152,7 +152,7 @@ CONFIG_mysql_dump_socket='<%= node[:mysql][:server][:data_dir] %>/mysql.sock'
 # definer set to the reloading user. If you require routines to be re-created with their original definer, dump and
 # load the contents of the mysql.proc table directly as described earlier.
 #
-#CONFIG_mysql_dump_full_schema='yes'
+CONFIG_mysql_dump_full_schema='yes'
 
 # Backup status of table(s) in textfile. This is very helpful when restoring backups, since it gives an idea, what changed
 # in the meantime.
