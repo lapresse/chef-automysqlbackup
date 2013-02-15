@@ -53,5 +53,5 @@ end
 cron "run_mysql_backup" do
   hour   node['automysqlbackup']['cron_hour']
   minute node['automysqlbackup']['cron_minute']
-  command "/usr/sbin/automysqlbackup"
+  command "/usr/sbin/automysqlbackup && chown -R dbadmin. /data/mysql/backup"
 end
