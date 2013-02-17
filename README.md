@@ -13,6 +13,8 @@ Platform
 
 Attributes
 ==========
+* `node['automysqlbackup']['version']` - 
+* `node['automysqlbackup']['checksum']` - 
 * `node['automysqlbackup']['download_url']` - 
 * `node['automysqlbackup']['config_path']` - 
 * `node['automysqlbackup']['config']` - 
@@ -34,6 +36,7 @@ Attributes
 * `node['automysqlbackup']['do_weekly']` - 
 * `node['automysqlbackup']['rotation_daily']` - 
 * `node['automysqlbackup']['rotation_weekly']` - 
+* `node['automysqlbackup']['rotation_monthly']` - 
 * `node['automysqlbackup']['mysql_dump_port']` - 
 * `node['automysqlbackup']['mysql_dump_commcomp']` - 
 * `node['automysqlbackup']['mysql_dump_usessl']` - 

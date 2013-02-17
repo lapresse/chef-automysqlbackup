@@ -1,3 +1,5 @@
+default['automysqlbackup']['version'] = "v3.0_rc6"
+default['automysqlbackup']['checksum'] = "a21123a2c5fbf568a7fe167698a82697ae1cbb21"
 default['automysqlbackup']['download_url'] = "http://downloads.sourceforge.net/project/automysqlbackup/AutoMySQLBackup/AutoMySQLBackup%20VER%203.0/automysqlbackup-v3.0_rc6.tar.gz"
 default['automysqlbackup']['config_path'] = "/etc/automysqlbackup"
 default['automysqlbackup']['config'] = "myserver"

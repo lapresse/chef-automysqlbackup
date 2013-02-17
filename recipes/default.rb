@@ -18,18 +18,8 @@
 # limitations under the License.
 #
 
-script "install automysqlbackup" do
-	interpreter "bash"
-	user "root"
-	cwd Chef::Config[:file_cache_path]
-	code <<-EOH
-	wget #{node['automysqlbackup']['download_url']}
-	mkdir automysqlbackup
-	cd automysqlbackup
-	tar -zxf ../automysqlbackup*.tar.gz
-	cp -pR automysqlbackup.conf #{node['automysqlbackup']['config_path']}/automysqlbackup.conf
-	cp -pR automysqlbackup #{node['automysqlbackup']['bin_path']}
-	EOH
+directory node['automysqlbackup']['bin_path'] do
+	action :create
 end
 
 directory node['automysqlbackup']['config_path'] do
@@ -42,6 +32,31 @@ directory node['automysqlbackup']['backup_dir'] do
 	mode "0700"
 	recursive true
 	action :create
+end
+
+src_filename = "automysqlbackup-v#{node['automysqlbackup']['version']}.tar.gz"
+src_filepath = "#{Chef::Config['file_cache_path']}/#{src_filename}"
+extract_path = "#{Chef::Config['file_cache_path']}/automysqlbackup/#{node['automysqlbackup']['checksum']}"
+
+remote_file src_filepath do
+	source node['automysqlbackup']['download_url']
+	checksum node['automysqlbackup']['checksum']
+	owner 'root'
+	group 'root'
+	mode 00644
+end
+
+bash 'extract automysqlbackup' do
+	cwd ::File.dirname(src_filepath)
+	code <<-EOH
+		mkdir -p #{extract_path}
+		tar xzf #{src_filename} -C #{extract_path}
+		cp -pR #{extract_path}/automysqlbackup.conf #{node['automysqlbackup']['config_path']}/automysqlbackup.conf
+		cp -pR #{extract_path}/automysqlbackup #{node['automysqlbackup']['bin_path']}
+		mv #{extract_path} #{node['automysqlbackup']['bin_path']}
+	EOH
+	not_if { ::File.exists?(extract_path) }
+	creates "#{node['automysqlbackup']['bin_path']}/automysqlbackup"
 end
 
 template "#{node['automysqlbackup']['config_path']}/#{node['automysqlbackup']['config']}.conf" do
