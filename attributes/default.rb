@@ -3,7 +3,7 @@ default['automysqlbackup']['checksum'] = "a21123a2c5fbf568a7fe167698a82697ae1cbb
 default['automysqlbackup']['download_url'] = "http://downloads.sourceforge.net/project/automysqlbackup/AutoMySQLBackup/AutoMySQLBackup%20VER%203.0/automysqlbackup-v3.0_rc6.tar.gz"
 default['automysqlbackup']['config_path'] = "/etc/automysqlbackup"
 default['automysqlbackup']['config'] = "myserver"
-default['automysqlbackup']['bin_path'] = "/usr/local/bin/automysqlbackup"
+default['automysqlbackup']['bin_path'] = "/usr/bin"
 default['automysqlbackup']['cron']['time_hour'] = "0"
 default['automysqlbackup']['cron']['time_minute'] = "1"
 
