@@ -54,6 +54,7 @@ bash 'extract automysqlbackup' do
 		cp -pR #{extract_path}/automysqlbackup.conf #{node['automysqlbackup']['config_path']}/automysqlbackup.conf
 		cp -pR #{extract_path}/automysqlbackup #{node['automysqlbackup']['bin_path']}
 		mv #{extract_path} #{node['automysqlbackup']['bin_path']}
+		chmod +x #{node['automysqlbackup']['bin_path']}
 	EOH
 	not_if { ::File.exists?(extract_path) }
 	creates "#{node['automysqlbackup']['bin_path']}/automysqlbackup"
@@ -69,7 +70,7 @@ end
 
 template "#{node['automysqlbackup']['config_path']}/run_mysql_backup" do
 	source "run_mysql_backup.erb"
-	mode "0755"
+	mode "0777"
 end
 
 cron "run_mysql_backup" do
