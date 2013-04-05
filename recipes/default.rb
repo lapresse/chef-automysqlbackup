@@ -18,7 +18,7 @@
 
 # This refers to data bags created by the identities cookbook:
 # https://github.com/failshell/chef-identities
-root = Chef::EncryptedDataBagItem.load( 'users_vault', 'root' )
+user = Chef::EncryptedDataBagItem.load( 'users_vault', node[:automysqlbackup][:user] )
 
 # package requirement
 package 'pigz' do
@@ -46,7 +46,7 @@ directory '/etc/automysqlbackup' do
 end
 
 template '/etc/automysqlbackup/automysqlbackup.conf' do
-  variables( :root_pass => root['password_cleartext'] )
+  variables( :user_pass => user['password_cleartext'] )
   mode 0400
 end
 

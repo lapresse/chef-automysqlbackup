@@ -10,7 +10,7 @@
 CONFIG_mysql_dump_username='<%= node[:automysqlbackup][:user] %>'
 
 # Password to access the MySQL server e.g. password
-CONFIG_mysql_dump_password='<%= @root_pass %>'
+CONFIG_mysql_dump_password='<%= @user_pass %>'
 
 # Host name (or IP address) of MySQL server e.g localhost
 CONFIG_mysql_dump_host='<%= node[:automysqlbackup][:server] %>'

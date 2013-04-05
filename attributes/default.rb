@@ -10,7 +10,7 @@ default['automysqlbackup']['cron_hour'] = 1
 default['automysqlbackup']['cron_minute'] = 0
 
 # credentials
-default['automysqlbackup']['user'] = "root"
+default['automysqlbackup']['user'] = "user"
 default['automysqlbackup']['mysql_dump_usessl'] = "no"
 
 # rotation
