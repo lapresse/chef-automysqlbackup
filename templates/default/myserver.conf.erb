@@ -86,19 +86,19 @@ CONFIG_do_weekly="<%= node['automysqlbackup']['do_weekly'] %>"
 
 # Set rotation of daily backups. VALUE*24hours
 # If you want to keep only today's backups, you could choose 1, i.e. everything older than 24hours will be removed.
-CONFIG_rotation_daily=node['mysql']['automysqlbackup']['rotation_daily']
+CONFIG_rotation_daily="<%= node['automysqlbackup']['rotation_daily'] %>"
 
 # Set rotation for weekly backups. VALUE*24hours
-CONFIG_rotation_weekly=node['mysql']['automysqlbackup']['rotation_weekly']
+CONFIG_rotation_weekly="<%= node['automysqlbackup']['rotation_weekly'] %>"
 
 # Set rotation for monthly backups. VALUE*24hours
-CONFIG_rotation_monthly=node['mysql']['automysqlbackup']['rotation_monthly']
+CONFIG_rotation_monthly="<%= node['automysqlbackup']['rotation_monthly'] %>"
 
 
 # Server Connection Settings
 
 # Set the port for the mysql connection
-CONFIG_mysql_dump_port=node['mysql']['automysqlbackup']['mysql_dump_port']
+CONFIG_mysql_dump_port="<%= node['automysqlbackup']['mysql_dump_port'] %>"
 
 # Compress communications between backup server and MySQL server?
 CONFIG_mysql_dump_commcomp="<%= node['automysqlbackup']['mysql_dump_commcomp'] %>"
