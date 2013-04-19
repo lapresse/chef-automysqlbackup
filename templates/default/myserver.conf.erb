@@ -51,24 +51,38 @@ CONFIG_multicore_threads="<%= node['automysqlbackup']['multicore_threads'] %>"
 
 # List of databases for Daily/Weekly Backup e.g. ( 'DB1' 'DB2' 'DB3' ... )
 # set to (), i.e. empty, if you want to backup all databases
-CONFIG_db_names=("<%= node['automysqlbackup']['db_names'] %>")
+<% if !node['automysqlbackup']['db_names'].empty? %>
+CONFIG_db_names=(<% node['automysqlbackup']['db_names'].each do |db_name| %>"<%= #{db_name} %>"<% end %>)
+<% else %>
+CONFIG_db_names=()
+<% end %>
 # You can use
 #declare -a MDBNAMES=( "${DBNAMES[@]}" 'added entry1' 'added entry2' ... )
 # INSTEAD to copy the contents of $DBNAMES and add further entries (optional).
 
 # List of databases for Monthly Backups.
 # set to (), i.e. empty, if you want to backup all databases
-CONFIG_db_month_names=("<%= node['automysqlbackup']['db_month_names'] %>")
+<% if !node['automysqlbackup']['db_month_names'].empty? %>
+CONFIG_db_month_names=(<% node['automysqlbackup']['db_month_names'].each do |db_month_name| %>"<%= #{db_month_name} %>"<% end %>)
+<% else %>
+CONFIG_db_month_names=()
+<% end %>
 
 # List of DBNAMES to EXLUCDE if DBNAMES is empty, i.e. ().
-CONFIG_db_exclude=("<%= node['automysqlbackup']['db_exclude'] %>")
-
+<% if !node['automysqlbackup']['db_exclude'].empty? %>
+CONFIG_db_exclude=(<% node['automysqlbackup']['db_exclude'].each do |db| %>"<%= #{db} %>"<% end %>)
+<% else %>
+CONFIG_db_exclude=()
+<% end %>
 # List of tables to exclude, in the form db_name.table_name
 # You may use wildcards for the table names, i.e. 'mydb.a*' selects all tables starting with an 'a'.
 # However we only offer the wildcard '*', matching everything that could appear, which translates to the
 # '%' wildcard in mysql.
-CONFIG_table_exclude=("<%= node['automysqlbackup']['table_exclude'] %>")
-
+<% if !node['automysqlbackup']['table_exclude'].empty? %>
+CONFIG_table_exclude=(<% node['automysqlbackup']['table_exclude'].each do |table| %>"<%= #{table} %>"<% end %>)
+<% else %>
+CONFIG_table_exclude=()
+<% end %>
 
 # Advanced Settings
 
@@ -242,7 +256,11 @@ CONFIG_encrypt_password="<%= node['automysqlbackup']['encrypt_password'] %>"
 # depending on the option CONFIG_encrypt encrypted.
 #
 # Note: This could also have been accomplished with CONFIG_prebackup or CONFIG_postbackup.
-CONFIG_backup_local_files=("<%= node['automysqlbackup']['backup_local_files'] %>")
+<% if !node['automysqlbackup']['table_exclude'].empty? %>
+CONFIG_backup_local_files=(<% node['automysqlbackup']['backup_local_files'].each do |backup_local_file| %>"<%= #{backup_local_file} %>"<% end %>)
+<% else %>
+CONFIG_backup_local_files=()
+<% end %>
 
 # Command to run before backups (uncomment to use)
 CONFIG_prebackup="<%= node['automysqlbackup']['prebackup'] %>"
