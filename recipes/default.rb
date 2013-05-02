@@ -29,7 +29,7 @@ end
 directory node['automysqlbackup']['backup_dir'] do
 	owner "root"
 	group "root"
-	mode "0700"
+	mode 2755
 	recursive true
 	action :create
 end
