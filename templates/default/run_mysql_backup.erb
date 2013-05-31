@@ -14,4 +14,6 @@ chown -R <%= node['automysqlbackup']['user'] %>:<%= node['automysqlbackup']['gro
 <% if node['automysqlbackup']['secure_backups'] %>
 find <%= node['automysqlbackup']['backup_dir'] %> -type f -exec chmod 400 {} \;
 find <%= node['automysqlbackup']['backup_dir'] %> -type d -exec chmod 700 {} \;
+<% else %>
+chmod 2755 <%= node['automysqlbackup']['backup_dir'] %>
 <% end %>
