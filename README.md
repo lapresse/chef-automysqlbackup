@@ -1,94 +1,72 @@
-Description
-===========
+chef-automysqlbackup
+====================
+[![GitHub tag](http://img.shields.io/github/tag/ffuenf/chef-automysqlbackup.svg)][tag]
+[![Build Status](http://img.shields.io/travis/ffuenf/chef-automysqlbackup.svg)][travis]
+[![Gittip](http://img.shields.io/gittip/arosenhagen.svg)][gittip]
 
-Installs and configures [automysqlbackup](http://sourceforge.net/projects/automysqlbackup/)
+[tag]: https://github.com/ffuenf/chef-automysqlbackup/tags
+[travis]: https://travis-ci.org/ffuenf/chef-automysqlbackup
+[gittip]: https://www.gittip.com/arosenhagen
 
-Requirements
-============
+
+chef-automysqlbackup installs and configures [automysqlbackup](http://sourceforge.net/projects/automysqlbackup/)
+
+Dependencies
+------------
+
+This cookbook depends on the following community cookbooks.
+
+* database
+* mysql
 
 Platform
 --------
 
-* Debian, Ubuntu
+The following platforms are supported and tested:
 
-Attributes
-==========
-* `node['automysqlbackup']['version']` - 
-* `node['automysqlbackup']['checksum']` - 
-* `node['automysqlbackup']['download_url']` - 
-* `node['automysqlbackup']['config_path']` - 
-* `node['automysqlbackup']['config']` - 
-* `node['automysqlbackup']['bin_path']` - 
-* `node['automysqlbackup']['cron']['time_hour']` - 
+* Debian 6.x
+* Debian 7.x
+* Ubuntu 14.04.x
 
-* `node['automysqlbackup']['mysql_dump_username']` - 
-* `node['automysqlbackup']['mysql_dump_password']` - use encrypted databag!
-* `node['automysqlbackup']['mysql_dump_host']` - 
-* `node['automysqlbackup']['mysql_dump_host_friendly']` - 
-* `node['automysqlbackup']['backup_dir']` - 
-* `node['automysqlbackup']['multicore']` - 
-* `node['automysqlbackup']['multicore_threads']` - 
-* `node['automysqlbackup']['db_names']` - 
-* `node['automysqlbackup']['db_month_names']` - 
-* `node['automysqlbackup']['db_exclude']` - 
-* `node['automysqlbackup']['table_exclude']` - 
-* `node['automysqlbackup']['do_monthly']` - 
-* `node['automysqlbackup']['do_weekly']` - 
-* `node['automysqlbackup']['rotation_daily']` - 
-* `node['automysqlbackup']['rotation_weekly']` - 
-* `node['automysqlbackup']['rotation_monthly']` - 
-* `node['automysqlbackup']['mysql_dump_port']` - 
-* `node['automysqlbackup']['mysql_dump_commcomp']` - 
-* `node['automysqlbackup']['mysql_dump_usessl']` - 
-* `node['automysqlbackup']['mysql_dump_socket']` - 
-* `node['automysqlbackup']['mysql_dump_max_allowed_packet']` - 
-* `node['automysqlbackup']['mysql_dump_single_transaction']` - 
-* `node['automysqlbackup']['mysql_dump_master_data']` - 
-* `node['automysqlbackup']['mysql_dump_full_schema']` - 
-* `node['automysqlbackup']['mysql_dump_dbstatus']` - 
-* `node['automysqlbackup']['mysql_dump_create_database']` - 
-* `node['automysqlbackup']['mysql_dump_use_separate_dirs']` - 
-* `node['automysqlbackup']['mysql_dump_compression']` - 
-* `node['automysqlbackup']['mysql_dump_latest']` - 
-* `node['automysqlbackup']['mysql_dump_latest_clean_filenames']` - 
-* `node['automysqlbackup']['mysql_dump_differential']` - 
-* `node['automysqlbackup']['mailcontent']` - 
-* `node['automysqlbackup']['mail_maxattsize']` - 
-* `node['automysqlbackup']['mail_splitandtar']` - 
-* `node['automysqlbackup']['mail_use_uuencoded_attachments']` - 
-* `node['automysqlbackup']['mail_address']` - 
-* `node['automysqlbackup']['encrypt']` - 
-* `node['automysqlbackup']['encrypt_password']` - use encrypted databag!
-* `node['automysqlbackup']['backup_local_files']` - 
-* `node['automysqlbackup']['prebackup']` - 
-* `node['automysqlbackup']['postbackup']` - 
-* `node['automysqlbackup']['dryrun']` - 
+Other Debian family distributions are assumed to work.
 
-Templates
-==========
+Development
+-----------
+1. Fork the repository from GitHub.
+2. Clone your fork to your local machine:
 
-`myserver.conf`
------------------
+        $ git clone git@github.com:USER/chef-automysqlbackup.git
 
-Creates a configuration file from the specified default attributes.
+3. Create a git branch
 
-`run_mysql_backup`
------------------
+        $ git checkout -b my_bug_fix
 
-Creates a script which is triggered by cron to automatically backup databases.
+4. **Write tests**
+5. Make your changes/patches/fixes, committing appropriately
+6. Run the tests: `foodcritic`, `rubocop`, `kitchen test`
+7. Push your changes to GitHub
+8. Open a Pull Request
 
-Usage
-=====
+Testing
+-------
 
-Simply include the recipe. Make sure you do not store passwords in plain-text! Use encrypted databags instead.
+chef-automysqlbackup is on [Travis CI](http://travis-ci.org/ffuenf/chef-automysqlbackup) which tests against multiple Chef and Ruby versions.
+
+The following Rake tasks are provided for automated testing of the cookbook:
+
+* `rake rubocop` - Run [RuboCop] style and lint checks
+* `rake foodcritic` - Run [Foodcritic] lint checks
+* `rake integration` - Run [Test Kitchen] integration tests (provisions a
+  Vagrant VM using this cookbook and then tests the infrastructure with
+  [Serverspec])
+* `rake test` - Run all tests
 
 License and Author
-==================
+------------------
 
-Original:: Benoit Caron (<bcaron@lapresse.ca>)
-Author:: Achim Rosenhagen (<a.rosenhagen@ffuenf.de>)
+- Author:: Achim Rosenhagen (<a.rosenhagen@ffuenf.de>)
 
-Copyright:: 2013, La Presse (Benoit Caron), Achim Rosenhagen
+- Copyright:: 2014, ffuenf
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
