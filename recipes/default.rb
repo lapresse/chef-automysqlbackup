@@ -3,7 +3,7 @@
 # Cookbook Name:: automysqlbackup
 # Recipe:: default
 #
-# Copyright 2013, Achim Rosenhagen
+# Copyright 2014, Achim Rosenhagen
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -41,7 +41,6 @@ extract_path = "#{Chef::Config['file_cache_path']}/automysqlbackup/#{node['autom
 remote_file src_filepath do
   source node['automysqlbackup']['download_url']
   checksum node['automysqlbackup']['checksum']
-  mode 0644
 end
 
 bash 'extract automysqlbackup' do
@@ -49,10 +48,8 @@ bash 'extract automysqlbackup' do
   code <<-EOH
   mkdir -p #{extract_path}
   tar xzf #{src_filename} -C #{extract_path}
-  cp -pR #{extract_path}/automysqlbackup.conf #{node['automysqlbackup']['config_path']}/automysqlbackup.conf
-  cp -pR #{extract_path}/automysqlbackup #{node['automysqlbackup']['bin_path']}
-  mv #{extract_path} #{node['automysqlbackup']['bin_path']}
-  chmod +x #{node['automysqlbackup']['bin_path']}
+  mv #{extract_path}/automysqlbackup.conf #{node['automysqlbackup']['config_path']}/automysqlbackup.conf
+  mv #{extract_path}/automysqlbackup #{node['automysqlbackup']['bin_path']}
   EOH
   not_if { ::File.exist?(extract_path) }
   creates "#{node['automysqlbackup']['bin_path']}/automysqlbackup"
@@ -60,19 +57,20 @@ end
 
 template "#{node['automysqlbackup']['config_path']}/#{node['automysqlbackup']['config']}.conf" do
   source 'myserver.conf.erb'
-  mode '0600'
+  mode 0600
   variables(
     automysqlbackup: node['automysqlbackup']
   )
 end
 
-template "#{node['automysqlbackup']['config_path']}/run_mysql_backup" do
+template "#{node['automysqlbackup']['bin_path']}/run_mysql_backup" do
   source 'run_mysql_backup.erb'
-  mode '0777'
+  mode 0755
 end
 
 cron 'run_mysql_backup' do
+  user 'root'
   hour node['automysqlbackup']['cron']['time_hour']
   minute node['automysqlbackup']['cron']['time_minute']
-  command "#{node['automysqlbackup']['config_path']}/run_mysql_backup"
+  command "#{node['automysqlbackup']['bin_path']}/run_mysql_backup >/dev/null 2>&1 | logger -t automysqlbackup"
 end
