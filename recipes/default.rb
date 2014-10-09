@@ -34,7 +34,7 @@ directory node['automysqlbackup']['backup_dir'] do
   action :create
 end
 
-src_filename = "automysqlbackup-v#{node['automysqlbackup']['version']}.tar.gz"
+src_filename = "automysqlbackup-#{node['automysqlbackup']['version']}.tar.gz"
 src_filepath = "#{Chef::Config['file_cache_path']}/#{src_filename}"
 extract_path = "#{Chef::Config['file_cache_path']}/automysqlbackup/#{node['automysqlbackup']['checksum']}"
 
@@ -48,8 +48,8 @@ bash 'extract automysqlbackup' do
   code <<-EOH
   mkdir -p #{extract_path}
   tar xzf #{src_filename} -C #{extract_path}
-  mv #{extract_path}/automysqlbackup.conf #{node['automysqlbackup']['config_path']}/automysqlbackup.conf
-  mv #{extract_path}/automysqlbackup #{node['automysqlbackup']['bin_path']}
+  mv #{extract_path}/automysqlbackup-#{node['automysqlbackup']['version']}/automysqlbackup.conf #{node['automysqlbackup']['config_path']}/automysqlbackup.conf
+  mv #{extract_path}/automysqlbackup-#{node['automysqlbackup']['version']}/automysqlbackup #{node['automysqlbackup']['bin_path']}
   EOH
   not_if { ::File.exist?(extract_path) }
   creates "#{node['automysqlbackup']['bin_path']}/automysqlbackup"
