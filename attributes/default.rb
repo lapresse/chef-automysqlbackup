@@ -1,6 +1,6 @@
 default['automysqlbackup']['version'] = 'v3.0_rc6'
-default['automysqlbackup']['checksum'] = 'a21123a2c5fbf568a7fe167698a82697ae1cbb21'
-default['automysqlbackup']['download_url'] = 'http://downloads.sourceforge.net/project/automysqlbackup/AutoMySQLBackup/AutoMySQLBackup%20VER%203.0/automysqlbackup-v3.0_rc6.tar.gz'
+default['automysqlbackup']['checksum'] = '7787ee6de38d9a65c50121007a58e68d1b1be45ca89497aaf5e80dbf7e06f544'
+default['automysqlbackup']['download_url'] = 'https://github.com/ffuenf/automysqlbackup/archive/v3.0_rc6.tar.gz'
 default['automysqlbackup']['config_path'] = '/etc/automysqlbackup'
 default['automysqlbackup']['config'] = 'myserver'
 default['automysqlbackup']['bin_path'] = '/usr/bin'

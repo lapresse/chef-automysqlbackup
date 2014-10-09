@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of dop_base.
 
+## 1.0.1 (October 9, 2014)
+
+* switch to https://github.com/ffuenf/automysqlbackup which adds a fix for MySQL 5.6
+
 ## 0.2.0 (August 16, 2014)
 
 * add colorized bash prompt via .bashrc
