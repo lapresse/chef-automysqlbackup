@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of dop_base.
 
+## 2.0.0 (January 22, 2015)
+
+* publish to supermarket
+
 ## 1.0.2 (October 9, 2014)
 
 * switch to https://github.com/ffuenf/automysqlbackup which adds a fix for MySQL 5.6
