@@ -2,6 +2,12 @@
 
 This file is used to list changes made in each version of dop_base.
 
+## 2.0.1 (January 22, 2015)
+
+* Install pigz if multicore enable (#2 by facastagnini)
+* Fix wrong path (#1 by facastagnini)
+* publish to supermarket
+
 ## 2.0.0 (January 22, 2015)
 
 * publish to supermarket
