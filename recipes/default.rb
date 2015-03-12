@@ -74,3 +74,5 @@ cron 'run_mysql_backup' do
   minute node['automysqlbackup']['cron']['time_minute']
   command "#{node['automysqlbackup']['bin_path']}/run_mysql_backup >/dev/null 2>&1 | logger -t automysqlbackup"
 end
+
+package 'pigz' if node['automysqlbackup']['multicore'] == 'yes'
