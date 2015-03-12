@@ -6,7 +6,7 @@
 
 
 # run backup
-<%= node['automysqlbackup']['bin_path'] %>automysqlbackup <%= node['automysqlbackup']['config_path'] %>/<%= node['automysqlbackup']['config'] %>.conf
+<%= node['automysqlbackup']['bin_path'] %>/automysqlbackup <%= node['automysqlbackup']['config_path'] %>/<%= node['automysqlbackup']['config'] %>.conf
 
 # set mode to backup
 chown -R <%= node['automysqlbackup']['user'] %>:<%= node['automysqlbackup']['group'] %> <%= node['automysqlbackup']['backup_dir'] %>
