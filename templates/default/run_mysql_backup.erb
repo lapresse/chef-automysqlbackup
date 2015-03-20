@@ -9,7 +9,7 @@
 <%= node['automysqlbackup']['bin_path'] %>/automysqlbackup <%= node['automysqlbackup']['config_path'] %>/<%= node['automysqlbackup']['config'] %>.conf
 
 # set mode to backup
-chown -R <%= node['automysqlbackup']['user'] %>:<%= node['automysqlbackup']['group'] %> <%= node['automysqlbackup']['backup_dir'] %>
+chown -R <%= node['automysqlbackup']['dump']['user'] %>:<%= node['automysqlbackup']['dump']['group'] %> <%= node['automysqlbackup']['backup_dir'] %>
 
 <% if node['automysqlbackup']['secure_backups'] %>
 find <%= node['automysqlbackup']['backup_dir'] %> -type f -exec chmod 400 {} \;
