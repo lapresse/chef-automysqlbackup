@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of dop_base.
 
+## 2.0.2 (September 14, 2017)
+
+* remove dependency to database (fixes #4)
+* update versions
+
 ## 2.0.1 (January 22, 2015)
 
 * Install pigz if multicore enable (#2 by facastagnini)
