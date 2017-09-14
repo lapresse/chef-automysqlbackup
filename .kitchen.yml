@@ -11,15 +11,15 @@ provisioner:
     ssl_verify_mode: verify_peer
 
 platforms:
-- name: debian-7.8.0-amd64
+- name: debian-8.7.1-amd64
   driver_config:
-    box: debian-7.8.0-amd64
-    box_url: https://atlas.hashicorp.com/ffuenf/boxes/debian-7.8.0-amd64/versions/1.0.3/providers/virtualbox.box
+    box: debian-8.7.1-amd64
+    box_url: https://atlas.hashicorp.com/ffuenf/boxes/debian-8.7.1-amd64/versions/1.0.45/providers/virtualbox.box
 
-- name: ubuntu-14.04.1-server-amd64
+- name: ubuntu-16.04.2-server-amd64
   driver_config:
-    box: ubuntu-14.04.1-server-amd64
-    box_url: https://atlas.hashicorp.com/ffuenf/boxes/ubuntu-14.04.1-server-amd64/versions/1.0.2/providers/virtualbox.box
+    box: ubuntu-16.04.2-server-amd64
+    box_url: https://atlas.hashicorp.com/ffuenf/boxes/ubuntu-16.04.2-server-amd64/versions/1.0.45/providers/virtualbox.box
 
 suites:
 - name: default
