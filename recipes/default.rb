@@ -29,7 +29,7 @@ end
 directory node['automysqlbackup']['backup_dir'] do
   owner 'root'
   group 'root'
-  mode 0755
+  mode 0o755
   recursive true
   action :create
 end
@@ -57,7 +57,7 @@ end
 
 template "#{node['automysqlbackup']['config_path']}/#{node['automysqlbackup']['config']}.conf" do
   source 'myserver.conf.erb'
-  mode 0600
+  mode 0o600
   variables(
     automysqlbackup: node['automysqlbackup']
   )
@@ -65,7 +65,7 @@ end
 
 template "#{node['automysqlbackup']['bin_path']}/run_mysql_backup" do
   source 'run_mysql_backup.erb'
-  mode 0755
+  mode 0o755
 end
 
 cron 'run_mysql_backup' do
